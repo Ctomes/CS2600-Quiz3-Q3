@@ -28,18 +28,39 @@
 #include <limits.h>
 #define TRUE 1
 #define MY_INT_MAX 1000000
+#define RESOURCE_FILE "max_num.txt"
 
 int main(){
 
     srand(time(NULL));//create random val for game
+    long max_num;//random val between this and 1
     
     while(TRUE)
     {
         unsigned char quit_val = 0; //used to determine exit condition
         unsigned int user_input; //read from scanf
-        long max_num = 10;//random val will be between this and 1
+        long last_max;
+
+        //read from file and grab max_num stored in resoruce
+        FILE* ptr = fopen(RESOURCE_FILE, "r");
+        if (ptr == NULL) 
+        {
+            printf("resource file does not exist.");
+            return 0;
+        }
+ 
+        char buf[10];
+        while (fgets(buf, 10,ptr) != NULL){}
+        fclose(ptr);
+
+        max_num = atoi(buf);
+        last_max = max_num;
+
+
+
         unsigned int guess = 0; //users guess
-        unsigned int rand_num = rand()%max_num; //force constraints
+        unsigned int rand_num = rand()%max_num+1; //force constraints
+
         printf("Press 1 to play a game\nPress 2 to change max number\nPress 3 to quit\n-------------------------\n");
         scanf("%d",&user_input);
         switch (user_input)
@@ -58,15 +79,26 @@ int main(){
 
                 if(max_num < 1){//retstrict neg inputs
                     printf("Negative values are not permitted.\n");
-                    max_num = 10;
+                    max_num = last_max;
                     continue;
                 }else if(max_num > MY_INT_MAX)//i set an arbitrary max don't go above.
                 {
                     printf("Value is too large.\n");
-                    max_num = 10;
+                    max_num = last_max;
                     continue;
                 }else{
                     printf("Setting max to %lu\n", max_num);
+
+                    //store to file
+                    ptr = fopen(RESOURCE_FILE, "w");
+                    if (ptr == NULL) 
+                    {
+                        printf("resource file does not exist.");
+                        return 0;
+                    }else{
+                        fprintf(ptr, "%lu",max_num);
+                    }
+                    fclose(ptr);
                     break;
                 }
             }while(TRUE);
