@@ -1,11 +1,14 @@
 //CS2600 Quiz 3 question 3
 //Tomes, Christopher
 
+//modified version for saving user info.
+
 //create a loop GAME_LOOP
 
 // prompt user for input
 
 // if 1, begin guessing game.
+    //look up a file and grab the MAXVAL from text file maxval.txt 
     //loop
     //prompt user for input
     //notify player if exact; "win game" , lower or higher.
@@ -13,8 +16,11 @@
 //if 2 modify MAX.
     // prompt player for new max.
     //begin game part 1 with new Max.
+    //save the MAXVAL to file maxval.txt
 
 //if 3 quit program.
+
+////CODE BELOW IS UNCHANGED FROM MAIN AT THE MOMENT//////
 
 #include <stdlib.h>
 #include <stdio.h>
